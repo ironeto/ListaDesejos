@@ -21,6 +21,14 @@
                 android:src="@drawable/outline_logout_24"
                 android:layout_gravity="right"
                 android:layout_marginEnd="16dp"/>
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/manage_accounts"
+                android:layout_gravity="right"
+                android:layout_marginEnd="16dp"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

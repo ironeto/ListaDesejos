@@ -13,6 +13,11 @@
         android:theme="@style/Theme.ListaDesejos"
         tools:targetApi="31">
         <activity
+
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+
             android:name=".CreateAccount"
             android:exported="false">
             <meta-data
