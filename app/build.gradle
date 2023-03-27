@@ -25,6 +25,9 @@ android {
             keyPassword "deskjet"
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
