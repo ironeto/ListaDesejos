@@ -18,12 +18,13 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
+import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 
 class CreateAccount : AppCompatActivity() {
     lateinit var etEmail: EditText
-    lateinit var etPassword: EditText
+    lateinit var etPassword: SenhaDificuldade
     lateinit var etConfirmPassword: EditText
-    lateinit var createAccountInputArray: Array<EditText>
+    lateinit var createAccountInputArray: Array<Any>
     lateinit var mGoogleSignInClient: GoogleSignInClient;
     private lateinit var firebaseAuth: FirebaseAuth;
 
@@ -59,7 +60,7 @@ class CreateAccount : AppCompatActivity() {
 
     private fun mapComponents(){
         etEmail = findViewById<EditText>(R.id.etEmail)
-        etPassword = findViewById<EditText>(R.id.etPassword)
+        etPassword = supportFragmentManager.findFragmentById(R.id.etPassword) as SenhaDificuldade
         etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
     }
 

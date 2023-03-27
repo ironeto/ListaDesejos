@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.alvaroneto.lista.desejos.fragments.ListFragment
+import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -23,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     val uid = FirebaseAuth.getInstance().currentUser?.uid
     val ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks")
-    val listItems = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-        val listView = findViewById<android.widget.ListView>(R.id.listViewTasks)
-        listView.adapter = adapter
+        var listView = supportFragmentManager.findFragmentById(R.id.listViewTasks) as ListFragment
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -75,15 +74,15 @@ class MainActivity : AppCompatActivity() {
             val ctx = this@MainActivity;
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                listItems.clear()
+                listView.listItems.clear()
 
                 for(child in dataSnapshot.children){
-                    listItems.add(child.child("titulo").value.toString())
+                    listView.listItems.add(child.child("titulo").value.toString())
                 }
 
-                adapter.notifyDataSetChanged()
+                listView.adapter.notifyDataSetChanged()
 
-                listView.setOnItemLongClickListener { parent, view, position, id ->
+                listView.list.setOnItemLongClickListener { parent, view, position, id ->
                     val itemId =  dataSnapshot.children.toList()[position].key
 
                     if(itemId != null){
@@ -102,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
                     true
                 }
-                listView.setOnItemClickListener { parent, view, position, id ->
+                listView.list.setOnItemClickListener { parent, view, position, id ->
                     val itemId =  dataSnapshot.children.toList()[position].key
 
                     val activity = Intent(ctx, TaskActivity::class.java)

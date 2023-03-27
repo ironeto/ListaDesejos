@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.alvaroneto.lista.desejos.utils.PasswordValidations
 import com.google.firebase.auth.FirebaseAuth
 
 class ChangePasswordActivity : AppCompatActivity() {
-    lateinit var etPassword: EditText
+    lateinit var etPassword: SenhaDificuldade
     lateinit var etConfirmPassword: EditText
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
 
@@ -18,7 +19,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
 
-        etPassword = findViewById<EditText>(R.id.etPassword)
+        etPassword = supportFragmentManager.findFragmentById(R.id.etPassword) as SenhaDificuldade
         etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
 
 

@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.alvaroneto.lista.desejos.databinding.ActivityTaskBinding
+import com.alvaroneto.lista.desejos.fragments.BotaoSalvarFragment
+import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.alvaroneto.lista.desejos.services.NotificationReceiver
 import java.util.*
 
@@ -64,7 +66,8 @@ class TaskActivity : AppCompatActivity() {
             timePickerDialog.show()
         }
 
-        findViewById<Button>(R.id.btn_save_task).setOnClickListener{
+        val botaoSalvarTask = supportFragmentManager.findFragmentById(R.id.btn_save_task) as BotaoSalvarFragment
+        botaoSalvarTask.botao_salvar.setOnClickListener{
             createUpdateTask()
         }
 
