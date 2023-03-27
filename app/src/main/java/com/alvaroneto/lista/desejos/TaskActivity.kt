@@ -3,15 +3,12 @@ package com.alvaroneto.lista.desejos
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,14 +18,13 @@ import com.google.firebase.database.ValueEventListener
 import com.alvaroneto.lista.desejos.databinding.ActivityTaskBinding
 import com.alvaroneto.lista.desejos.services.NotificationReceiver
 import java.util.*
-import kotlin.random.Random.Default.nextInt
 
 class TaskActivity : AppCompatActivity() {
     val uid = FirebaseAuth.getInstance().currentUser?.uid
     val db_ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks")
 
     var taskId: String = ""
-    
+
     private lateinit var binding: ActivityTaskBinding;
     private lateinit var firebaseAnalytics: FirebaseAnalytics;
 
@@ -76,10 +72,10 @@ class TaskActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel(){
-        val name = "Notification Channel INFNET"
-        val descriptionText = "Channel for INFNET notifications"
+        val name = "Notification Channel WishList"
+        val descriptionText = "Channel for WishList notifications"
         val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel("INFNET", name, importance).apply {
+        val channel = NotificationChannel("WihList", name, importance).apply {
             description = descriptionText
         }
 
@@ -112,8 +108,8 @@ class TaskActivity : AppCompatActivity() {
 
     private fun scheduleNotification(data: String, hora: String){
         val intent = Intent(this, NotificationReceiver::class.java)
-        val title = "Título da notificação"
-        val message = "Mensagem da notificação"
+        val title = "Wish item expirating"
+        val message = "Your Wish item is expirating"
 
         intent.putExtra("title", title)
         intent.putExtra("message", message)
@@ -124,25 +120,26 @@ class TaskActivity : AppCompatActivity() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val calendar = Calendar.getInstance()
 //        calendar.add(Calendar.MINUTE, 1)
-        val data_dia = data.substring(0, 2).toInt()
-        val data_mes = data.substring(3, 5).toInt() - 1
-        val data_ano = data.substring(6, 10).toInt()
-        val hora_hora = hora.substring(0, 2).toInt()
-        val hora_minuto = hora.substring(3, 5).toInt()
+        val dataDia = data.substring(0, 2).toInt()
+        val dataMes = data.substring(3, 5).toInt() - 1
+        val dataAno = data.substring(6, 10).toInt()
+        val horaHora = hora.substring(0, 2).toInt()
+        val horaMinuto = hora.substring(3, 5).toInt()
 
         calendar.set(
-            data_ano,
-            data_mes,
-            data_dia,
-            hora_hora,
-            hora_minuto,
+            dataAno,
+            dataMes,
+            dataDia,
+            horaHora,
+            horaMinuto,
             0
         )
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){ //Verificar a versão da build, pq para cada versão, temos uma forma correta de criar o alarme
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         } else {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         }
+
         Toast.makeText(this, "Notificação agendada", Toast.LENGTH_SHORT).show()
     }
 
@@ -176,8 +173,8 @@ class TaskActivity : AppCompatActivity() {
         }else{
             val titulo = findViewById<EditText>(R.id.titulo)
             val descricao = findViewById<EditText>(R.id.titulo)
-            val data = findViewById<EditText>(R.id.titulo)
-            val hora = findViewById<EditText>(R.id.titulo)
+            val data = findViewById<EditText>(R.id.in_date)
+            val hora = findViewById<EditText>(R.id.in_time)
 
             val task =  hashMapOf(
                 "titulo" to titulo.text.toString(),
@@ -189,7 +186,7 @@ class TaskActivity : AppCompatActivity() {
             val novoElemento = db_ref.push()
             novoElemento.setValue(task)
 
-            Toast.makeText(this, "Tarefa criada com sucesso!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Wish item created successfully!", Toast.LENGTH_SHORT).show()
 
             Intent(this, MainActivity::class.java).also {
                 startActivity(it)

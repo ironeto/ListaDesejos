@@ -15,17 +15,19 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance();
 
-        findViewById<View>(R.id.textEntrar).setOnClickListener{
-            returnToLogin()
-        }
-
-        findViewById<View>(R.id.btnRecuperar).setOnClickListener{
+        findViewById<View>(R.id.btnRecuperar).setOnClickListener {
             val emailAddress = findViewById<EditText>(R.id.etEmail).text.toString()
 
-            firebaseAuth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Email enviado com sucesso!", Toast.LENGTH_SHORT).show()
-                    returnToLogin()
+            if (emailAddress.trim().isEmpty()){
+                Toast.makeText(this, "Por favor, informe o e-mail", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                firebaseAuth.sendPasswordResetEmail(emailAddress).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Email enviado com sucesso!", Toast.LENGTH_SHORT).show()
+                        returnToLogin()
+                    }
                 }
             }
         }

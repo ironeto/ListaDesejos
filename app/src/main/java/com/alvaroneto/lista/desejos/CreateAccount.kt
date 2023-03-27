@@ -52,7 +52,7 @@ class CreateAccount : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.btnCreateAccount).setOnClickListener {
-            signIn()
+            signUp()
         }
     }
 
@@ -122,19 +122,11 @@ class CreateAccount : AppCompatActivity() {
         }
     }
 
-    private fun notEmpty(): Boolean = etPassword.text.toString().trim().isNotEmpty() &&
-            etEmail.text.toString().trim().isNotEmpty() &&
-            etConfirmPassword.text.toString().trim().isNotEmpty()
-
-    private fun verifyIdenticalPassword(): Boolean = etPassword.text.toString().trim() == etConfirmPassword.text.toString().trim()
-
-    private fun verifySizePassword(): Boolean = etPassword.text.toString().trim().length >= 6
-
     fun verifyPassword(): Boolean {
         var isValid = false;
-        if(notEmpty()){
-            if(verifyIdenticalPassword()){
-                if(verifySizePassword()){
+        if(PasswordValidations.notEmpty(etPassword,etConfirmPassword)){
+            if(PasswordValidations.verifyIdenticalPassword(etPassword,etConfirmPassword)){
+                if(PasswordValidations.verifySizePassword(etPassword)){
                     isValid = true
                 }else{
                     Toast.makeText(this, "As senhas são iguais mas de tamanho inadequado.", Toast.LENGTH_SHORT).show();
@@ -152,7 +144,7 @@ class CreateAccount : AppCompatActivity() {
         return isValid
     }
 
-    private fun signIn(){
+    private fun signUp(){
         if (verifyPassword()) {
             val userEmail = etEmail.text.toString().trim()
             val userPassword = etPassword.text.toString().trim()

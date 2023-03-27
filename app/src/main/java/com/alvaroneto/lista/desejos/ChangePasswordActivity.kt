@@ -26,21 +26,10 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
     }
 
-    private fun notEmpty(): Boolean = etPassword.text.toString().trim().isNotEmpty() &&
-            etConfirmPassword.text.toString().trim().isNotEmpty()
-
-    private fun verifySizePassword(): Boolean{
-        var correct = false
-        if(etPassword.text.toString().trim().length >= 6) {
-            correct = true
-        }
-        return correct;
-    }
-
     fun changePassword(){
-        if(notEmpty()) {
-            if (verifySizePassword()) {
-                if (etPassword.text.toString().trim() == etConfirmPassword.text.toString().trim()) {
+        if(PasswordValidations.notEmpty(etPassword, etConfirmPassword)) {
+            if (PasswordValidations.verifySizePassword(etPassword)) {
+                if (PasswordValidations.verifyIdenticalPassword(etPassword,etConfirmPassword)) {
                     val user = firebaseAuth.currentUser
 
                     user!!.updatePassword(etPassword.text.toString().trim())
