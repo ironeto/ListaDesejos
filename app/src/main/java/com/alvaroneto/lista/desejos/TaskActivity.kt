@@ -144,6 +144,11 @@ class TaskActivity : AppCompatActivity() {
     }
 
     fun createUpdateTask(){
+
+        if (findViewById<EditText>(R.id.titulo).text.toString().trim().isEmpty()){
+            Toast.makeText(this, "Por favor, informe ao menos o Título", Toast.LENGTH_SHORT).show()
+        }
+
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, uid)
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "create_task")
