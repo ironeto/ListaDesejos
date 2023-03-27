@@ -101,18 +101,14 @@ class TaskActivity : AppCompatActivity() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@TaskActivity, "Erro ao carregar tarefa", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TaskActivity, "Erro ao carregar item", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun scheduleNotification(data: String, hora: String){
+    private fun scheduleNotification(title: String, data: String, hora: String){
         val intent = Intent(this, NotificationReceiver::class.java)
-        val title = "Wish item expirating"
-        val message = "Your Wish item is expirating"
-
         intent.putExtra("title", title)
-        intent.putExtra("message", message)
 
 
         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -147,6 +143,7 @@ class TaskActivity : AppCompatActivity() {
 
         if (findViewById<EditText>(R.id.titulo).text.toString().trim().isEmpty()){
             Toast.makeText(this, "Por favor, informe ao menos o Título", Toast.LENGTH_SHORT).show()
+            return;
         }
 
         val bundle = Bundle()
@@ -168,11 +165,11 @@ class TaskActivity : AppCompatActivity() {
                     task["hora"] = findViewById<EditText>(R.id.in_time).text.toString()
 
                     ref.setValue(task)
-                    Toast.makeText(this@TaskActivity, "Tarefa atualizada com sucesso", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TaskActivity, "Item atualizado com sucesso", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@TaskActivity, "Erro ao atualizar tarefa", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TaskActivity, "Erro ao atualizar item", Toast.LENGTH_SHORT).show()
                 }
             })
         }else{
@@ -191,12 +188,12 @@ class TaskActivity : AppCompatActivity() {
             val novoElemento = db_ref.push()
             novoElemento.setValue(task)
 
-            Toast.makeText(this, "Wish item created successfully!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Item criado com sucesso!", Toast.LENGTH_SHORT).show()
 
             Intent(this, MainActivity::class.java).also {
                 startActivity(it)
             }
         }
-        scheduleNotification(findViewById<EditText>(R.id.in_date).text.toString(), findViewById<EditText>(R.id.in_time).text.toString())
+        scheduleNotification(findViewById<EditText>(R.id.titulo).text.toString(),findViewById<EditText>(R.id.in_date).text.toString(), findViewById<EditText>(R.id.in_time).text.toString())
     }
 }

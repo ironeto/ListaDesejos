@@ -88,11 +88,11 @@ class MainActivity : AppCompatActivity() {
 
                     if(itemId != null){
                         AlertDialog.Builder(ctx)
-                            .setTitle("Deletar tarefa")
-                            .setMessage("Deseja deletar a tarefa?")
+                            .setTitle("Deletar item")
+                            .setMessage("Deseja deletar a item?")
                             .setPositiveButton("Sim"){ dialog, which ->
                                 ref.child(itemId).removeValue()
-                                Toast.makeText(ctx, "Tarefa deletada com sucesso", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(ctx, "Item deletado com sucesso", Toast.LENGTH_SHORT).show()
                             }
                             .setNegativeButton("Não"){ dialog, which ->
                                 dialog.dismiss()
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(ctx, "Erro ao carregar tarefas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, "Erro ao carregar itens", Toast.LENGTH_SHORT).show()
             }
         })
     }
