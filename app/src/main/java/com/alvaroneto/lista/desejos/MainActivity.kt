@@ -67,7 +67,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.fab_add_task).setOnClickListener{
             val activity = Intent(this, TaskActivity::class.java);
             startActivity(activity)
-            finish()
+        }
+
+        findViewById<View>(R.id.mais_desejados).setOnClickListener{
+            val activity = Intent(this, ItemsMaisDesejadosActivity::class.java);
+            startActivity(activity)
         }
 
         findViewById<View>(R.id.mais_desejados).setOnClickListener{
