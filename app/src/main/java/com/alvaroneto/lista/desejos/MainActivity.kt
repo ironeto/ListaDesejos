@@ -97,8 +97,6 @@ class MainActivity : AppCompatActivity() {
 
             val activity = Intent(this, LoginScreen::class.java);
             startActivity(activity);
-<<<<<<< HEAD
-=======
             finish()
         }
 
@@ -106,7 +104,6 @@ class MainActivity : AppCompatActivity() {
             val activity = Intent(this, ProfileActivity::class.java);
             startActivity(activity);
             finish()
->>>>>>> 4692350 (inital)
         }
     }
 
