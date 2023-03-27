@@ -16,12 +16,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.alvaroneto.lista.desejos.databinding.ActivityTaskBinding
+import com.alvaroneto.lista.desejos.fragments.BotaoSalvarClickDelegate
 import com.alvaroneto.lista.desejos.fragments.BotaoSalvarFragment
 import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.alvaroneto.lista.desejos.services.NotificationReceiver
 import java.util.*
 
-class TaskActivity : AppCompatActivity() {
+class TaskActivity : AppCompatActivity(), BotaoSalvarClickDelegate {
     val uid = FirebaseAuth.getInstance().currentUser?.uid
     val db_ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks")
 
@@ -29,6 +30,10 @@ class TaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTaskBinding;
     private lateinit var firebaseAnalytics: FirebaseAnalytics;
+
+    override fun salvar() {
+        createUpdateTask()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +72,6 @@ class TaskActivity : AppCompatActivity() {
         }
 
         val botaoSalvarTask = supportFragmentManager.findFragmentById(R.id.btn_save_task) as BotaoSalvarFragment
-        botaoSalvarTask.botao_salvar.setOnClickListener{
-            createUpdateTask()
-        }
-
         createNotificationChannel()
     }
 

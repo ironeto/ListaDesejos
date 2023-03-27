@@ -28,6 +28,13 @@
                 android:src="@drawable/manage_accounts"
                 android:layout_gravity="right"
                 android:layout_marginEnd="16dp"/>
+            <ImageView
+                android:id="@+id/mais_desejados"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:src="@drawable/loyalty_48px"
+                android:layout_gravity="right"
+                android:layout_marginEnd="16dp"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

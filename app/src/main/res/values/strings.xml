@@ -33,6 +33,7 @@
     <string name="senha_media">Média</string>
     <string name="senha_forte">Forte</string>
     <string name="senha_muito_forte">Muito Forte</string>
+    <string name="itens_mais_desejados">Ver mais desejados</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
