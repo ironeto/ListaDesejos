@@ -20,6 +20,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class CreateAccount : AppCompatActivity() {
     lateinit var etEmail: EmailFragment
@@ -68,6 +69,7 @@ class CreateAccount : AppCompatActivity() {
     private fun initializeFirebase(){
         FirebaseApp.initializeApp(this)
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
     }
 
     private fun initializeGoogle(){

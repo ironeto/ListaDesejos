@@ -1,12 +1,16 @@
 package com.alvaroneto.lista.desejos
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.alvaroneto.lista.desejos.fragments.ListFragment
 import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,6 +23,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.alvaroneto.lista.desejos.fragments.WeatherFragments
+import com.google.firebase.messaging.FirebaseMessaging
+import android.Manifest
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var mGoogleSignClient: GoogleSignInClient;
@@ -29,6 +36,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                println("Token Push Notification: $token")
+            } else {
+                Toast.makeText(this, "Erro ao inicializar as Notificações por Push", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, WeatherFragments()).commit()
 
@@ -123,5 +139,39 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(ctx, "Erro ao carregar itens", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSIONS_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, register for FCM token
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val token = task.result
+                            // Use token for sending messages
+                        } else {
+                            // Handle token generation failure
+                        }
+                    }
+                } else {
+                    // Handle permission denial
+                }
+            }
+        }
+    }
+
+    // Request permission
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.RECEIVE_SMS),
+            PERMISSIONS_REQUEST_CODE
+        )
+    }
+
+    companion object {
+        const val PERMISSIONS_REQUEST_CODE = 100
     }
 }
