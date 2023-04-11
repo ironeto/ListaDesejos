@@ -77,7 +77,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.mais_desejados).setOnClickListener{
             val activity = Intent(this, ItemsMaisDesejadosActivity::class.java);
             startActivity(activity)
-            finish()
         }
 
         ref.addValueEventListener(object: ValueEventListener {
