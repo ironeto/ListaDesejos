@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.alvaroneto.lista.desejos.fragments.EmailFragment
 import com.alvaroneto.lista.desejos.utils.PasswordValidations
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 
 class CreateAccount : AppCompatActivity() {
-    lateinit var etEmail: EditText
+    lateinit var etEmail: EmailFragment
     lateinit var etPassword: SenhaDificuldade
     lateinit var etConfirmPassword: EditText
     lateinit var createAccountInputArray: Array<Any>
@@ -59,7 +60,7 @@ class CreateAccount : AppCompatActivity() {
     }
 
     private fun mapComponents(){
-        etEmail = findViewById<EditText>(R.id.etEmail)
+        etEmail = supportFragmentManager.findFragmentById(R.id.etEmail) as EmailFragment
         etPassword = supportFragmentManager.findFragmentById(R.id.etPassword) as SenhaDificuldade
         etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
     }
@@ -147,8 +148,13 @@ class CreateAccount : AppCompatActivity() {
     }
 
     private fun signUp(){
+        if(!etEmail.isValid()){
+            Toast.makeText(this, "Email invalido.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (verifyPassword()) {
-            val userEmail = etEmail.text.toString().trim()
+            val userEmail = etEmail.emailEditText.text.toString().trim()
             val userPassword = etPassword.text.toString().trim()
 
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener{task ->

@@ -36,4 +36,6 @@
     <string name="itens_mais_desejados">Ver mais desejados</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="valid_email">E-mail válido</string>
+    <string name="invalid_email">E-mail inválido</string>
 </resources>

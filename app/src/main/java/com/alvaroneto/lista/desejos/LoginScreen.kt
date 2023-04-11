@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.alvaroneto.lista.desejos.fragments.EmailFragment
+import com.alvaroneto.lista.desejos.fragments.SenhaDificuldade
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,7 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginScreen : AppCompatActivity() {
 
-    lateinit var etEmail: EditText
+    lateinit var etEmail: EmailFragment
     lateinit var etPassword: EditText
 
     val Req_Code:Int=123;
@@ -30,7 +32,7 @@ class LoginScreen : AppCompatActivity() {
         setContentView(R.layout.activity_login_screen)
         supportActionBar?.hide()
 
-        etEmail = findViewById<EditText>(R.id.etEmail)
+        etEmail = supportFragmentManager.findFragmentById(R.id.etEmail) as EmailFragment
         etPassword = findViewById<EditText>(R.id.etPassword)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -102,11 +104,16 @@ class LoginScreen : AppCompatActivity() {
     }
 
     private fun notEmpty(): Boolean = etPassword.text.toString().trim().isNotEmpty() &&
-            etEmail.text.toString().trim().isNotEmpty()
+            etEmail.emailEditText.text.toString().trim().isNotEmpty()
 
     private fun sign(){
+        if(!etEmail.isValid()){
+            Toast.makeText(this, "Email invalido.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(notEmpty()){
-            val userEmail = etEmail.text.toString().trim()
+            val userEmail = etEmail.emailEditText.text.toString().trim()
             val userPassword = etPassword.text.toString().trim()
 
             firebaseAuth.signInWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener { task ->
