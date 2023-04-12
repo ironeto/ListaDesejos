@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">My Wish List</string>
+    <string name="registro">Register</string>
+    <string name="registro_com_google">Register with Google</string>
+    <string name="login_com_google">Login with Google</string>
+    <string name="preencha_todos_os_campos">Please fill in all fields</string>
+    <string name="senha_menor_que_6">Password must be at least 6 characters long</string>
+    <string name="senha_alterada">Password changed successfully!</string>
+    <string name="senhas_nao_conferem">Passwords do not match</string>
+    <string name="btn_alterar_senha">Change password</string>
+    <string name="descricao_task_field">Description</string>
+    <string name="titulo_task_field">Title</string>
+    <string name="btn_select_date">Date</string>
+    <string name="btn_select_hour">Time</string>
+    <string name="save_task">Save</string>
+    <string name="lista_de_tarefas">Wish List</string>
+    <string name="e_mail">Email</string>
+    <string name="nome">Name</string>
+    <string name="password">Password</string>
+    <string name="sobrenome">Last Name</string>
+    <string name="or">or</string>
+    <string name="atualizar_perfil">Update Profile</string>
+    <string name="entrar">Sign In</string>
+    <string name="esqueci_minha_senha">I Forgot My Password</string>
+    <string name="registrar">Register</string>
+    <string name="entrar_com_google">Sign In with Google</string>
+    <string name="confirmar_senha">Confirm Password</string>
+    <string name="registrar_com_google">Register with Google</string>
+    <string name="recuperar">Recover</string>
+    <string name="sem_senha">No password</string>
+    <string name="senha_muito_fraca">Very Weak</string>
+    <string name="senha_fraca">Weak</string>
+    <string name="senha_media">Medium</string>
+    <string name="senha_forte">Strong</string>
+    <string name="senha_muito_forte">Very Strong</string>
+    <string name="itens_mais_desejados">View Most Desired</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="valid_email">Valid Email</string>
+    <string name="invalid_email">Invalid Email</string>
+</resources>
